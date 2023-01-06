@@ -236,7 +236,14 @@ Below are just some high-level definition for the error codes
 __________________________________________________________________
 
 #### SUPPORTING SSL FOR LOAD BALANCERS ####
+SSL certificate allows traffic between your clients & load balancer to be encrypted in transit (in flight encryption)/ SSL Secure Sockets Layer. TLS newer. 
+SSL certs has expiration date. 
+Users connect over HTTPS (encypted secure) over public internet. Internally, load balancer terminates and talks to instances over VPC over HTTP. 
+Load ba;anmcer uses a X.509 cert from ACM. HTTPS listener must define default cert, optional list of cert sot support support multiple domains
+Clients can use SNI to specify the hostname they reach - ability to specify a security policy to support older versions of SSL/TLS (older clients)
 
+SNI solves the problem of loading multiple SSL certs onto one web server to serve multiple webiste. it's a newer protocol requiring the clinet to indicate the hostname of the tarfget server to the initial SSL. The server wll then find the correct cert of return the default. 
+Only works for ALB/NLB/Cloudfront. 
 A common question is: **how do we support legacy browsersthat has an old TLS (e.g. TLS 1.0)?**
 
 Answer:
